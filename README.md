@@ -4,6 +4,13 @@
 [![Support](https://img.shields.io/badge/support-iOS7.0+-blue.svg?style=flat)](https://www.apple.com/nl/ios/)&nbsp;
 [![Support](https://img.shields.io/badge/support-Autolayout-orange.svg?style=flatt)](https://www.apple.com/)&nbsp;
 
+##Requirements
+The version requires iOS 7.0+ and Xcode 8.0+
+
+##License
+TTStock is provided under the MIT license. See LICENSE file for details.
+
+##介绍
 ####相比第一版:
 ####1.代码重新封装,数据源抽象,更方便集成
 ####2.代码注释,逻辑清晰,低耦合
