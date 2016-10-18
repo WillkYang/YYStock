@@ -8,7 +8,7 @@
 The version requires iOS 7.0+ and Xcode 8.0+
 
 ##License
-TTStock is provided under the MIT license. See LICENSE file for details.
+YYStock is provided under the MIT license. See LICENSE file for details.
 
 ##介绍
 ####相比第一版:
