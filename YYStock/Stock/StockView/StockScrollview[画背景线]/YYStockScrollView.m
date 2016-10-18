@@ -27,12 +27,13 @@
         CGContextSetStrokeColorWithColor(ctx, [UIColor YYStock_bgLineColor].CGColor);
         CGContextSetLineWidth(ctx, 0.5);
         CGFloat unitHeight = (self.frame.size.height*[YYStockVariable lineMainViewRadio])/4;
-        const CGPoint line1[] = {CGPointMake(0, 1),CGPointMake(self.frame.size.width, 1)};
-        const CGPoint line2[] = {CGPointMake(0, unitHeight),CGPointMake(self.frame.size.width, unitHeight)};
-        const CGPoint line3[] = {CGPointMake(0, unitHeight*2),CGPointMake(self.frame.size.width, unitHeight*2)};
-        const CGPoint line4[] = {CGPointMake(0, unitHeight*3),CGPointMake(self.frame.size.width, unitHeight*3)};
-        const CGPoint line5[] = {CGPointMake(0, unitHeight*4),CGPointMake(self.frame.size.width, unitHeight*4)};
-        const CGPoint line6[] = {CGPointMake(0, self.frame.size.height * (1 - [YYStockVariable volumeViewRadio]) ),CGPointMake(self.frame.size.width, self.frame.size.height * (1 - [YYStockVariable volumeViewRadio]))};
+        
+        const CGPoint line1[] = {CGPointMake(0, 1),CGPointMake(self.contentSize.width, 1)};
+        const CGPoint line2[] = {CGPointMake(0, unitHeight),CGPointMake(self.contentSize.width, unitHeight)};
+        const CGPoint line3[] = {CGPointMake(0, unitHeight*2),CGPointMake(self.contentSize.width, unitHeight*2)};
+        const CGPoint line4[] = {CGPointMake(0, unitHeight*3),CGPointMake(self.contentSize.width, unitHeight*3)};
+        const CGPoint line5[] = {CGPointMake(0, unitHeight*4),CGPointMake(self.contentSize.width, unitHeight*4)};
+        const CGPoint line6[] = {CGPointMake(0, self.frame.size.height * (1 - [YYStockVariable volumeViewRadio]) ),CGPointMake(self.contentSize.width, self.frame.size.height * (1 - [YYStockVariable volumeViewRadio]))};
         
         CGContextStrokeLineSegments(ctx, line1, 2);
         CGContextStrokeLineSegments(ctx, line2, 2);

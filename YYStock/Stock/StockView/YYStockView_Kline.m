@@ -22,7 +22,7 @@
 /**
  数据源
  */
-@property (nonatomic, copy) NSArray <id<YYLineDataModelProtocol>>*lineModels;
+@property (nonatomic, strong) NSArray <id<YYLineDataModelProtocol>>*lineModels;
 
 /**
  K线部分
@@ -76,6 +76,7 @@
     if (self) {
         _lineModels = lineModels;
         [self initUI];
+        [self scrollToBottom];
     }
     return self;
 }
@@ -113,8 +114,16 @@
 - (void)reDrawWithLineModels:(NSArray <id<YYLineDataModelProtocol>>*) lineModels {
     _lineModels = lineModels;
     dispatch_async(dispatch_get_main_queue(), ^{
+        [self layoutIfNeeded];
         [self setNeedsDisplay];
     });
+}
+
+- (void)layoutSubviews {
+    [super layoutSubviews];
+    if (self.lineModels.count > 0) {
+        [self scrollToBottom];
+    }
 }
 
 /**
@@ -150,14 +159,7 @@
     _stockScrollView.backgroundColor = [UIColor colorWithWhite:1 alpha:0.2];
     _stockScrollView.showsHorizontalScrollIndicator = NO;
     _stockScrollView.delegate = self;
-    //缩放
-    UIPinchGestureRecognizer *pinch = [[UIPinchGestureRecognizer alloc]initWithTarget:self action:@selector(event_pinchAction:)];
-    [_stockScrollView addGestureRecognizer:pinch];
-    //长按手势
-    UILongPressGestureRecognizer *longPress = [[UILongPressGestureRecognizer alloc]initWithTarget:self action:@selector(event_longPressAction:)];
-    [_stockScrollView addGestureRecognizer:longPress];
-    
-    
+
     [self addSubview:_stockScrollView];
     [_stockScrollView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.bottom.equalTo(self);
@@ -165,7 +167,13 @@
         make.top.equalTo(self).offset(YYStockScrollViewTopGap);
         make.right.equalTo(self).offset(-12);
     }];
-
+    
+    //缩放
+    UIPinchGestureRecognizer *pinch = [[UIPinchGestureRecognizer alloc]initWithTarget:self action:@selector(event_pinchAction:)];
+    [_stockScrollView addGestureRecognizer:pinch];
+    //长按手势
+    UILongPressGestureRecognizer *longPress = [[UILongPressGestureRecognizer alloc]initWithTarget:self action:@selector(event_longPressAction:)];
+    [_stockScrollView addGestureRecognizer:longPress];
 }
 
 
@@ -326,6 +334,13 @@
     //更新scrollview的contentsize
     self.stockScrollView.contentSize = CGSizeMake(kLineViewWidth, self.stockScrollView.contentSize.height);
     return kLineViewWidth;
+}
+
+- (void)scrollToBottom {
+    [self updateScrollViewContentWidth];
+    if (self.stockScrollView.contentSize.width > self.stockScrollView.bounds.size.width) {
+        self.stockScrollView.contentOffset = CGPointMake(self.stockScrollView.contentSize.width - self.stockScrollView.bounds.size.width,self.stockScrollView.contentOffset.y);
+    }
 }
 
 - (void)event_longPressAction:(UILongPressGestureRecognizer *)longPress {
