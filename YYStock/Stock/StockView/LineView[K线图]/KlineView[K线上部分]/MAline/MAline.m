@@ -17,6 +17,7 @@
 
 @property (nonatomic, strong) NSArray *MAPositions;
 
+@property (nonatomic, strong) UIColor *lineColor;
 @end
 
 @implementation MAline
@@ -34,14 +35,19 @@
     return self;
 }
 
+- (void)drawRect:(CGRect)rect {
+    [super drawRect: rect];
+
+}
+
 - (void)drawWithColor:(UIColor *)lineColor maPositions:(NSArray *)maPositions {
     _MAPositions = maPositions;
-
+    _lineColor = lineColor;
     if(!self.context || !self.MAPositions) {
         return;
     }
     
-    CGContextSetStrokeColorWithColor(self.context, lineColor.CGColor);
+    CGContextSetStrokeColorWithColor(self.context, self.lineColor.CGColor);
     
     CGContextSetLineWidth(self.context, YYStockMALineLineWidth);
     

@@ -217,7 +217,7 @@
     
 
     
-    //加载LineView
+    //加载TimeLineView
     _timeLineView = [YYTimeLineView new];
     _timeLineView.backgroundColor = [UIColor clearColor];
     [_stockScrollView.contentView addSubview:_timeLineView];

@@ -326,10 +326,6 @@
     if(kLineViewWidth < self.stockScrollView.bounds.size.width) {
         kLineViewWidth = self.stockScrollView.bounds.size.width;
     }
-
-    [self mas_updateConstraints:^(MASConstraintMaker *make) {
-        make.width.equalTo(@(kLineViewWidth));
-    }];
     
     //更新scrollview的contentsize
     self.stockScrollView.contentSize = CGSizeMake(kLineViewWidth, self.stockScrollView.contentSize.height);
@@ -337,16 +333,15 @@
 }
 
 - (void)scrollToBottom {
-    [self updateScrollViewContentWidth];
-    if (self.stockScrollView.contentSize.width > self.stockScrollView.bounds.size.width) {
-        self.stockScrollView.contentOffset = CGPointMake(self.stockScrollView.contentSize.width - self.stockScrollView.bounds.size.width,self.stockScrollView.contentOffset.y);
-    }
+//    [self updateScrollViewContentWidth];
+//    if (self.stockScrollView.contentSize.width > self.stockScrollView.bounds.size.width) {
+//        self.stockScrollView.contentOffset = CGPointMake(self.stockScrollView.contentSize.width - self.stockScrollView.bounds.size.width,self.stockScrollView.contentOffset.y);
+//    }
 }
 
 - (void)event_longPressAction:(UILongPressGestureRecognizer *)longPress {
     static CGFloat oldPositionX = 0;
-    if(UIGestureRecognizerStateChanged == longPress.state || UIGestureRecognizerStateBegan == longPress.state)
-    {
+    if(UIGestureRecognizerStateChanged == longPress.state || UIGestureRecognizerStateBegan == longPress.state) {
         CGPoint location = [longPress locationInView:self.stockScrollView];
         if (location.x < 0 || location.x > self.stockScrollView.contentSize.width) return;
         if(ABS(oldPositionX - location.x) < ([YYStockVariable lineWidth] + [YYStockVariable lineGap])/2) return;

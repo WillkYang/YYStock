@@ -119,10 +119,15 @@
         YYLinePositionModel *positionModel = [YYLinePositionModel modelWithOpen:openPoint close:closePoint high:highPoint low:lowPoint];
         [self.drawPositionModels addObject:positionModel];
         
-        [self.MA5Positions addObject: [NSValue valueWithCGPoint:CGPointMake(xPosition, ABS(maxY - (model.MA5.floatValue - minValue)/unitValue))]];
-        [self.MA10Positions addObject: [NSValue valueWithCGPoint:CGPointMake(xPosition, ABS(maxY - (model.MA10.floatValue - minValue)/unitValue))]];
-        [self.MA20Positions addObject: [NSValue valueWithCGPoint:CGPointMake(xPosition, ABS(maxY - (model.MA20.floatValue - minValue)/unitValue))]];
-
+        if (model.MA5.floatValue > 0.f) {
+            [self.MA5Positions addObject: [NSValue valueWithCGPoint:CGPointMake(xPosition, ABS(maxY - (model.MA5.floatValue - minValue)/unitValue))]];
+        }
+        if (model.MA10.floatValue > 0.f) {
+            [self.MA10Positions addObject: [NSValue valueWithCGPoint:CGPointMake(xPosition, ABS(maxY - (model.MA10.floatValue - minValue)/unitValue))]];
+        }
+        if (model.MA20.floatValue > 0.f) {
+            [self.MA20Positions addObject: [NSValue valueWithCGPoint:CGPointMake(xPosition, ABS(maxY - (model.MA20.floatValue - minValue)/unitValue))]];
+        }
     }];
     
     return self.drawPositionModels ;
