@@ -404,20 +404,27 @@
             
             //3.拿到中心点数据源的index
             CGFloat oldLeftArrCount = ABS(centerX + [YYStockVariable lineGap]) / ([YYStockVariable lineGap] + [YYStockVariable lineWidth]);
-
+            
             //4.缩放重绘
-            [YYStockVariable setLineWith:[YYStockVariable lineWidth] * (difValue > 0 ? (1 + YYStockLineScaleFactor) : (1 - YYStockLineScaleFactor))];
+            CGFloat newLineWidth = [YYStockVariable lineWidth] * (difValue > 0 ? (1 + YYStockLineScaleFactor) : (1 - YYStockLineScaleFactor));
+            [YYStockVariable setLineWith:newLineWidth];
             [self updateScrollViewContentWidth];
             
             //5.计算更新宽度后捏合中心点距离klineView左侧的距离
             CGFloat newLeftDistance = oldLeftArrCount * [YYStockVariable lineWidth] + (oldLeftArrCount - 1) * [YYStockVariable lineGap];
             
             //6.设置scrollview的contentoffset = (5) - (2);
-            CGFloat newOffsetX = newLeftDistance - (centerX - self.stockScrollView.contentOffset.x);
-            if (newOffsetX > 0) {
-                self.stockScrollView.contentOffset = CGPointMake(newOffsetX , self.stockScrollView.contentOffset.y);
-                [self setNeedsDisplay];
+            if ( self.lineModels.count * newLineWidth + (self.lineModels.count + 1) * [YYStockVariable lineGap] > self.stockScrollView.bounds.size.width ) {
+                CGFloat newOffsetX = newLeftDistance - (centerX - self.stockScrollView.contentOffset.x);
+                if (newOffsetX > 0) {
+                    self.stockScrollView.contentOffset = CGPointMake(newOffsetX , self.stockScrollView.contentOffset.y);
+                } else {
+                    self.stockScrollView.contentOffset = CGPointMake(0 , self.stockScrollView.contentOffset.y);
+                }
+            } else {
+                self.stockScrollView.contentOffset = CGPointMake(0 , self.stockScrollView.contentOffset.y);
             }
+            [self setNeedsDisplay];
         }
     }
 }
