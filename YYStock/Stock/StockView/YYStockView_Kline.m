@@ -390,30 +390,35 @@
 }
 
 - (void)event_pinchAction:(UIPinchGestureRecognizer *)pinch {
+    
+    //1.获取缩放倍数
     static CGFloat oldScale = 1.0f;
     CGFloat difValue = pinch.scale - oldScale;
+    
     if(ABS(difValue) > YYStockLineScaleBound) {
-        CGFloat oldKLineWidth = [YYStockVariable lineWidth];
-        
-//        NSInteger oldNeedDrawStartIndex = [self startIndex];
-        NSLog(@"原来的index%ld", [self startIndex]);
-        [YYStockVariable setLineWith:oldKLineWidth * (difValue > 0 ? (1 + YYStockLineScaleFactor) : (1 - YYStockLineScaleFactor))];
-        oldScale = pinch.scale;
-        //更新MainView的宽度
-        [self updateScrollViewContentWidth];
-        
         if( pinch.numberOfTouches == 2 ) {
+            //2.获取捏合中心点 -> 捏合中心点距离scrollviewcontent左侧的距离
             CGPoint p1 = [pinch locationOfTouch:0 inView:self.stockScrollView];
             CGPoint p2 = [pinch locationOfTouch:1 inView:self.stockScrollView];
-            CGPoint centerPoint = CGPointMake((p1.x+p2.x)/2, (p1.y+p2.y)/2);
-//            NSUInteger oldLeftArrCount = ABS((centerPoint.x - self.stockScrollView.contentOffset.x) - [YYStockVariable lineGap]) / ([YYStockVariable lineGap] + oldKLineWidth);
-            NSUInteger newLeftArrCount = ABS((centerPoint.x - self.stockScrollView.contentOffset.x) - [YYStockVariable lineGap]) / ([YYStockVariable lineGap] + [YYStockVariable lineWidth]);
+            CGFloat centerX = (p1.x+p2.x)/2;
             
-//            self.kLineMainView.pinchStartIndex = oldNeedDrawStartIndex + oldLeftArrCount - newLeftArrCount;
-            //            self.kLineMainView.pinchPoint = centerPoint;
-            NSLog(@"计算得出的index%lu",newLeftArrCount);
+            //3.拿到中心点数据源的index
+            CGFloat oldLeftArrCount = ABS(centerX + [YYStockVariable lineGap]) / ([YYStockVariable lineGap] + [YYStockVariable lineWidth]);
+
+            //4.缩放重绘
+            [YYStockVariable setLineWith:[YYStockVariable lineWidth] * (difValue > 0 ? (1 + YYStockLineScaleFactor) : (1 - YYStockLineScaleFactor))];
+            [self updateScrollViewContentWidth];
+            
+            //5.计算更新宽度后捏合中心点距离klineView左侧的距离
+            CGFloat newLeftDistance = oldLeftArrCount * [YYStockVariable lineWidth] + (oldLeftArrCount - 1) * [YYStockVariable lineGap];
+            
+            //6.设置scrollview的contentoffset = (5) - (2);
+            CGFloat newOffsetX = newLeftDistance - (centerX - self.stockScrollView.contentOffset.x);
+            if (newOffsetX > 0) {
+                self.stockScrollView.contentOffset = CGPointMake(newOffsetX , self.stockScrollView.contentOffset.y);
+                [self setNeedsDisplay];
+            }
         }
-        [self setNeedsDisplay];
     }
 }
 

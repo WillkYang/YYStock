@@ -114,7 +114,7 @@
 /**
  *  K线的缩放因子
  */
-#define YYStockLineScaleFactor 0.03
+#define YYStockLineScaleFactor 0.06
 
 //Kline种类
 typedef NS_ENUM(NSInteger, YYStockType) {
