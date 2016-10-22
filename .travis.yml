@@ -3,4 +3,4 @@ language: objective-c
 xcode_workspace: YYStockDemo/YYStockDemo.xcworkspace
 xcode_scheme: YYStockDemo
 profile: YYStockDemo
-script: xcodebuild -workspace YYStockDemo/YYStockDemo.xcworkspace -scheme YYStockDemo
+script: xcodebuild -workspace YYStockDemo/YYStockDemo.xcworkspace -scheme YYStockDemo -sdk iphonesimulator
