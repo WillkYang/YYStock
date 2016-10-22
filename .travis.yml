@@ -1,5 +1,5 @@
 osx_image: xcode8
 language: objective-c
 xcode_workspace: YYStockDemo/YYStockDemo.xcworkspace
-xcode_scheme: YYStockDeme
-profile: YYStockDeme
+xcode_scheme: YYStockDemo
+profile: YYStockDemo
