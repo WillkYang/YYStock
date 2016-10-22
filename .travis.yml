@@ -1,0 +1,5 @@
+language: objective-c
+xcode_project: YYStockDemo.xcodeproj
+xcode_workspace: YYStockDemo/YYStockDemo.xcworkspace
+xcode_scheme: YYStockDeme
+profile: YYStockDeme
