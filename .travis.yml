@@ -1,5 +1,6 @@
-osx_image: xcode8
+osx_image: xcode8.0
 language: objective-c
 xcode_workspace: YYStockDemo/YYStockDemo.xcworkspace
 xcode_scheme: YYStockDemo
 profile: YYStockDemo
+script: xcodebuild -workspace YYStockDemo/YYStockDemo.xcworkspace -scheme YYStockDemo -sdk iphonesimulator
