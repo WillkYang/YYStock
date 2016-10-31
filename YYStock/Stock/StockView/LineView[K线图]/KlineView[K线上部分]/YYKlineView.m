@@ -23,7 +23,6 @@
 
 @property (nonatomic, strong) NSMutableArray *MA20Positions;
 
-
 @end
 
 @implementation YYKlineView

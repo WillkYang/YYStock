@@ -238,9 +238,6 @@
         make.top.equalTo(_timeLineView.mas_bottom);
         make.height.equalTo(_stockScrollView.contentView).multipliedBy(1-[YYStockVariable lineMainViewRadio]);
     }];
-    
-
-    
 }
 
 - (void)initUI_stockScrollView {
@@ -273,6 +270,10 @@
     CGFloat leftGap = YYStockTimeLineViewLeftGap + 3;
     CGFloat topOffset = -textSize.height/2.f - 3;
     CGFloat creasePercent = (maxValue / ((maxValue + minValue)/2.f)) * 100 - 100;
+    
+    if (isnan(creasePercent) || creasePercent == INFINITY) {
+        creasePercent = 0.00;
+    }
     //顶部间距
     for (int i = 0; i < 3; i++) {
         NSString *text = [NSString stringWithFormat:@"%.2f",maxValue - unitValue * i];

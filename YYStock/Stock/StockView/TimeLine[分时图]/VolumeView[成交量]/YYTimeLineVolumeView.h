@@ -10,5 +10,7 @@
 #import "YYStockTimeLineProtocol.h"
 #import "YYVolumePositionModel.h"
 @interface YYTimeLineVolumeView : UIView
+
 - (void)drawViewWithXPosition:(CGFloat)xPosition drawModels:(NSArray <id<YYStockTimeLineProtocol>>*)drawLineModels;
+
 @end

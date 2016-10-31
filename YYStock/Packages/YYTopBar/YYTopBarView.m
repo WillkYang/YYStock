@@ -35,11 +35,20 @@
  */
 @property (nonatomic, strong) UIScrollView *scrollView;
 
+/**
+ 按钮排列样式
+ */
 @property (nonatomic, assign) YYTopBarDistributionStyle distributionStyle;
 
+/**
+ 当前选中的index
+ */
 @property (nonatomic, assign) NSUInteger selectedIndex;
 
-
+/**
+ 持有按钮数组
+ */
+@property (nonatomic, strong) NSMutableArray *btnArray;
 @end
 
 @implementation YYTopBarView
@@ -61,6 +70,13 @@
     return self;
 }
 
+- (void)layoutSubviews {
+    [super layoutSubviews];
+    if (self.distributionStyle == YYTopBarDistributionStyleInScreen) {
+        self.scrollView.contentSize = self.scrollView.bounds.size;
+    }
+}
+
 /**
  初始化顶部按钮在一屏内
  */
@@ -76,6 +92,7 @@
         //按钮组
         __block UIButton *lastBtn;
         __block UIButton *firstBtn;
+        self.btnArray = @[].mutableCopy;
         [self.titleItems enumerateObjectsUsingBlock:^(NSString  *_Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
             UIButton *btn = [self createBtnWithTitle:obj tag:idx+100];
             [scrollView addSubview:btn];
@@ -107,7 +124,7 @@
         scrollView.contentSize = self.frame.size;
         scrollView;
     });
-    dispatch_async(dispatch_get_main_queue(), ^{
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         [self updateBtnUI:nil newBtn:[self.scrollView.subviews firstObject]];
     });
 }
@@ -120,7 +137,6 @@
         UIScrollView *scrollView = [UIScrollView new];
         scrollView.showsHorizontalScrollIndicator = NO;
         scrollView.showsVerticalScrollIndicator = NO;
-//        scrollView.bounces = NO;
         scrollView.delegate = self;
         [self addSubview:scrollView];
         [scrollView mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -141,6 +157,7 @@
             }];
             if (!lastBtn) firstBtn = btn;
             lastBtn = btn;
+            [self.btnArray addObject:btn];
         }];
         
         //指示器
@@ -162,6 +179,9 @@
         
         scrollView.contentSize = CGSizeMake(self.titleItems.count * YYStockTopBarViewWidth, YYStockTopBarViewHeight);
         scrollView;
+    });
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [self updateBtnUI:nil newBtn:[self.scrollView.subviews firstObject]];
     });
 }
 
@@ -190,6 +210,19 @@
     if (self.selectedIndex != btn.tag-100) {
         self.userInteractionEnabled= NO;
         [self updateBtnUI:[self.scrollView viewWithTag:self.selectedIndex+100] newBtn:btn];
+
+        //滚动scrollview
+        CGFloat willOffsetX = ((btn.frame.origin.x + btn.frame.size.width/2.f) - self.bounds.size.width/2.f);
+        [UIView animateWithDuration:.5f animations:^{
+            if (willOffsetX < 0) {
+                self.scrollView.contentOffset = CGPointZero;
+            } else if(willOffsetX + self.scrollView.bounds.size.width > self.scrollView.contentSize.width) {
+                self.scrollView.contentOffset = CGPointMake(self.scrollView.contentSize.width - self.scrollView.bounds.size.width, 0);
+            } else {
+                self.scrollView.contentOffset = CGPointMake(willOffsetX, 0);
+            }
+        }];
+        
         if ([self.delegate respondsToSelector:@selector(YYTopBarView:didSelectedIndex:)]) {
             [self.delegate YYTopBarView:self didSelectedIndex:btn.tag-100];
         }
@@ -197,6 +230,18 @@
             self.userInteractionEnabled= YES;
         });
     }
+}
+
+
+/**
+ 选中按钮
+
+ @param index 按钮index
+ */
+- (void)selectIndex:(NSInteger)index {
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self didClickBtnAction:[self.scrollView viewWithTag:index + 100]];
+    });
 }
 
 /**
@@ -208,7 +253,7 @@
 - (void)updateBtnUI: (UIButton *)oldBtn newBtn:(UIButton *)newBtn {
 
     oldBtn.selected = NO;
-    newBtn.selected = YES;
+    [newBtn setSelected:YES];
 
     [self.indicatorView mas_remakeConstraints:^(MASConstraintMaker *make) {
         make.centerX.equalTo(newBtn.mas_centerX);
@@ -224,10 +269,8 @@
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-//    scrollView.bounces = (scrollView.contentOffset.y != 0 ) ? NO : YES;
     if (scrollView.contentOffset.y != 0) {
         scrollView.contentOffset = CGPointMake(scrollView.contentOffset.x, 0);
-//        scrollView.contentOffset.y = 0;
     }
 }
 

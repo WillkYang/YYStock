@@ -291,6 +291,9 @@
     //更新最大值最小值-价格
     CGFloat min =  [[[self.drawLineModels valueForKeyPath:@"Low"] valueForKeyPath:@"@min.floatValue"] floatValue];
     CGFloat max =  [[[self.drawLineModels valueForKeyPath:@"High"] valueForKeyPath:@"@max.floatValue"] floatValue];
+    CGFloat ma20 = [[[self.drawLineModels valueForKeyPath:@"MA20"] valueForKeyPath:@"@max.floatValue"] floatValue];
+    max = MAX(ma20, max);
+    
     CGFloat average = ((int)((min+max) / 2) / 5) * 5;
     maxValue =  (((int)max / 5) + 2) * 5;
     minValue = average * 2 - maxValue;
@@ -377,7 +380,7 @@
         }
     }
     
-    if(longPress.state == UIGestureRecognizerStateEnded)
+    if(longPress.state == UIGestureRecognizerStateEnded || longPress.state == UIGestureRecognizerStateCancelled || longPress.state == UIGestureRecognizerStateFailed)
     {
         //恢复scrollView的滑动
         selectedModel = self.drawLineModels.lastObject;
@@ -397,6 +400,7 @@
     
     if(ABS(difValue) > YYStockLineScaleBound) {
         if( pinch.numberOfTouches == 2 ) {
+            
             //2.获取捏合中心点 -> 捏合中心点距离scrollviewcontent左侧的距离
             CGPoint p1 = [pinch locationOfTouch:0 inView:self.stockScrollView];
             CGPoint p2 = [pinch locationOfTouch:1 inView:self.stockScrollView];
@@ -416,14 +420,11 @@
             //6.设置scrollview的contentoffset = (5) - (2);
             if ( self.lineModels.count * newLineWidth + (self.lineModels.count + 1) * [YYStockVariable lineGap] > self.stockScrollView.bounds.size.width ) {
                 CGFloat newOffsetX = newLeftDistance - (centerX - self.stockScrollView.contentOffset.x);
-                if (newOffsetX > 0) {
-                    self.stockScrollView.contentOffset = CGPointMake(newOffsetX , self.stockScrollView.contentOffset.y);
-                } else {
-                    self.stockScrollView.contentOffset = CGPointMake(0 , self.stockScrollView.contentOffset.y);
-                }
+                self.stockScrollView.contentOffset = CGPointMake(newOffsetX > 0 ? newOffsetX : 0 , self.stockScrollView.contentOffset.y);
             } else {
                 self.stockScrollView.contentOffset = CGPointMake(0 , self.stockScrollView.contentOffset.y);
             }
+            
             [self setNeedsDisplay];
         }
     }

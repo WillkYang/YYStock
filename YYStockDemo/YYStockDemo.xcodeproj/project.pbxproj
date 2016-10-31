@@ -505,7 +505,7 @@
 				TargetAttributes = {
 					8487029E1DB50A440088A9CE = {
 						CreatedOnToolsVersion = 8.0;
-						ProvisioningStyle = Automatic;
+						ProvisioningStyle = Manual;
 					};
 				};
 			};
@@ -745,7 +745,7 @@
 			baseConfigurationReference = 0345723E5CB643E09A25A7A7 /* Pods-YYStockDemo.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = YYStockDemo/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
@@ -760,7 +760,7 @@
 			baseConfigurationReference = CFC39EBD18F324AD7A9669B4 /* Pods-YYStockDemo.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = YYStockDemo/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;

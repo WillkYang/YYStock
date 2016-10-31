@@ -38,4 +38,10 @@ typedef NS_ENUM(NSUInteger, YYTopBarDistributionStyle) {
  */
 - (instancetype)initWithItems:(NSArray <NSString *>*)titleItems distributionStyle: (YYTopBarDistributionStyle)style;
 
+/**
+ 选中按钮
+ 
+ @param index 按钮index = 0,1,...
+ */
+- (void)selectIndex:(NSInteger)index;
 @end

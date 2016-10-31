@@ -63,7 +63,13 @@
                                              context:nil];
             
             CGFloat width = rect.size.width;
-            [pModel.DayDesc drawAtPoint:CGPointMake(pModel.StartPoint.x - width/2, pModel.EndPoint.y) withAttributes:attribute];
+            if (idx == 0) {
+                [pModel.DayDesc drawAtPoint:CGPointMake(pModel.StartPoint.x, pModel.EndPoint.y) withAttributes:attribute];
+            } else if(idx + 1 == [self.drawPositionModels count]) {
+                [pModel.DayDesc drawAtPoint:CGPointMake(pModel.StartPoint.x - width, pModel.EndPoint.y) withAttributes:attribute];
+            } else {
+                [pModel.DayDesc drawAtPoint:CGPointMake(pModel.StartPoint.x - width/2, pModel.EndPoint.y) withAttributes:attribute];
+            }
         }
     }];
     
@@ -100,8 +106,22 @@
         CGPoint startPoint = CGPointMake(xPosition, ABS(yPosition - maxY) > 1 ? yPosition : maxY - 1);
         CGPoint endPoint = CGPointMake(xPosition, maxY);
         
-        NSString *dayDesc = model.isShowDay ? model.Day : @"";
-        
+        NSString *dayDesc;
+        if ( idx == 0 ) {
+            dayDesc = model.Day;
+        } else if( idx + 1 == [drawLineModels count] ){
+            if ([drawLineModels count] > 20) {
+                dayDesc = model.Day;
+            } else {
+                dayDesc = @"";
+            }
+        } else {
+            if (idx > 20 && drawLineModels.count - idx > 20) {
+                dayDesc = model.isShowDay ? model.Day : @"";
+            } else {
+                dayDesc = @"";
+            }
+        }
         YYVolumePositionModel *positionModel = [YYVolumePositionModel modelWithStartPoint:startPoint endPoint:endPoint dayDesc:dayDesc];
         [self.drawPositionModels addObject:positionModel];
         
