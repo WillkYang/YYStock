@@ -108,7 +108,33 @@
     _drawLineModels = timeLineModels;
     _fiveRecordModel = fiveRecordModel;
     _isShowFiveRecord = isShowFiveRecord;
+    [self layoutIfNeeded];
+    [self updateScrollViewContentWidth];
     [self setNeedsDisplay];
+}
+
+
+- (void)drawRect:(CGRect)rect {
+    [super drawRect:rect];
+    if (self.drawLineModels.count > 0) {
+        if (!self.maskView || self.maskView.isHidden) {
+            //更新绘制的数据源
+            [self updateDrawModels];
+            //绘制K线上部分
+            self.drawLinePositionModels = [self.timeLineView drawViewWithXPosition:0 drawModels:self.drawLineModels maxValue:maxValue minValue:minValue];
+            //绘制成交量
+            [self.volumeView drawViewWithXPosition:0 drawModels:self.drawLineModels];
+            //更新背景线
+            self.stockScrollView.isShowBgLine = YES;
+            [self.stockScrollView setNeedsDisplay];
+            //更新五档图
+            if (self.isShowFiveRecord) {
+                [self.fiveRecordView reDrawWithFiveRecordModel:self.fiveRecordModel];
+            }
+        }
+        //绘制左侧文字部分
+        [self drawLeftRightDesc];
+    }
 }
 
 - (void)showTouchView:(NSSet<UITouch *> *)touches {
@@ -116,6 +142,7 @@
     CGPoint location = [touches.anyObject locationInView:self.stockScrollView];
     if (location.x < 0 || location.x > self.stockScrollView.contentSize.width) return;
     if(ABS(oldPositionX - location.x) < ([YYStockVariable timeLineVolumeWidth]+ YYStockTimeLineViewVolumeGap)/2) return;
+    
     oldPositionX = location.x;
     NSInteger startIndex = (NSInteger)(oldPositionX / (YYStockTimeLineViewVolumeGap + [YYStockVariable timeLineVolumeWidth]));
     
@@ -169,29 +196,7 @@
     [self hideTouchView];
 }
 
-- (void)drawRect:(CGRect)rect {
-    [super drawRect:rect];
-    if (self.drawLineModels.count > 0) {
-        [self updateScrollViewContentWidth];
-        if (!self.maskView || self.maskView.isHidden) {
-            //更新绘制的数据源
-            [self updateDrawModels];
-            //绘制K线上部分
-            self.drawLinePositionModels = [self.timeLineView drawViewWithXPosition:0 drawModels:self.drawLineModels maxValue:maxValue minValue:minValue];
-            //绘制成交量
-            [self.volumeView drawViewWithXPosition:0 drawModels:self.drawLineModels];
-            //更新背景线
-            self.stockScrollView.isShowBgLine = YES;
-            [self.stockScrollView setNeedsDisplay];
-            //更新五档图
-            if (self.isShowFiveRecord) {
-                [self.fiveRecordView reDrawWithFiveRecordModel:self.fiveRecordModel];
-            }
-        }
-        //绘制左侧文字部分
-        [self drawLeftRightDesc];
-    }
-}
+
 
 /**
  初始化子View

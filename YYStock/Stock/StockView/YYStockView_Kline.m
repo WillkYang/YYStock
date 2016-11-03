@@ -76,7 +76,6 @@
     if (self) {
         _lineModels = lineModels;
         [self initUI];
-        [self scrollToBottom];
     }
     return self;
 }
@@ -84,7 +83,6 @@
 - (void)drawRect:(CGRect)rect {
     [super drawRect:rect];
     if (self.lineModels.count > 0) {
-        [self updateScrollViewContentWidth];
         if (!self.maskView || self.maskView.isHidden) {
             //更新绘制的数据源
             [self updateDrawModels];
@@ -113,16 +111,11 @@
  */
 - (void)reDrawWithLineModels:(NSArray <id<YYLineDataModelProtocol>>*) lineModels {
     _lineModels = lineModels;
-    dispatch_async(dispatch_get_main_queue(), ^{
-        [self layoutIfNeeded];
-        [self setNeedsDisplay];
-    });
-}
-
-- (void)layoutSubviews {
-    [super layoutSubviews];
+    [self layoutIfNeeded];
+    [self updateScrollViewContentWidth];
+    [self setNeedsDisplay];
     if (self.lineModels.count > 0) {
-        [self scrollToBottom];
+        self.stockScrollView.contentOffset = CGPointMake(self.stockScrollView.contentSize.width - self.stockScrollView.bounds.size.width, self.stockScrollView.contentOffset.y);
     }
 }
 
@@ -291,8 +284,11 @@
     //更新最大值最小值-价格
     CGFloat min =  [[[self.drawLineModels valueForKeyPath:@"Low"] valueForKeyPath:@"@min.floatValue"] floatValue];
     CGFloat max =  [[[self.drawLineModels valueForKeyPath:@"High"] valueForKeyPath:@"@max.floatValue"] floatValue];
+    CGFloat ma5 = [[[self.drawLineModels valueForKeyPath:@"MA5"] valueForKeyPath:@"@max.floatValue"] floatValue];
+    CGFloat ma10 = [[[self.drawLineModels valueForKeyPath:@"MA10"] valueForKeyPath:@"@max.floatValue"] floatValue];
     CGFloat ma20 = [[[self.drawLineModels valueForKeyPath:@"MA20"] valueForKeyPath:@"@max.floatValue"] floatValue];
-    max = MAX(ma20, max);
+
+    max = MAX(MAX(MAX(ma5, ma10), ma20), max);
     
     CGFloat average = ((int)((min+max) / 2) / 5) * 5;
     maxValue =  (((int)max / 5) + 2) * 5;
@@ -335,12 +331,6 @@
     return kLineViewWidth;
 }
 
-- (void)scrollToBottom {
-//    [self updateScrollViewContentWidth];
-//    if (self.stockScrollView.contentSize.width > self.stockScrollView.bounds.size.width) {
-//        self.stockScrollView.contentOffset = CGPointMake(self.stockScrollView.contentSize.width - self.stockScrollView.bounds.size.width,self.stockScrollView.contentOffset.y);
-//    }
-}
 
 - (void)event_longPressAction:(UILongPressGestureRecognizer *)longPress {
     static CGFloat oldPositionX = 0;
@@ -424,7 +414,8 @@
             } else {
                 self.stockScrollView.contentOffset = CGPointMake(0 , self.stockScrollView.contentOffset.y);
             }
-            
+            //更新contentsize
+            [self updateScrollViewContentWidth];
             [self setNeedsDisplay];
         }
     }

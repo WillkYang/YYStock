@@ -13,6 +13,7 @@
 #import "YYStockView_TimeLine.h"
 #import "UIColor+YYStockTheme.h"
 #import "YYStockViewMaskView.h"
+#import "YYStockVariable.h"
 #import <Masonry/Masonry.h>
 @interface YYStock()<YYTopBarViewDelegate, YYStockViewLongPressProtocol, YYStockViewTimeLinePressProtocol>
 /**
