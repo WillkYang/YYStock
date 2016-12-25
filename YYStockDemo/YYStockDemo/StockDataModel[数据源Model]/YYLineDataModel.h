@@ -3,7 +3,7 @@
 //  投融宝
 //
 //  Created by yate1996 on 16/10/5.
-//  Copyright © 2016年 yate1996. All rights reserved.
+//  Copyright © 2016年 yeeyuntech. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
@@ -17,4 +17,8 @@
 
 - (void)updateMA:(NSArray *)parentDictArray;
 
+
+//@property (nonatomic, assign) BOOL isShowDay;
+@property (nonatomic, strong) id<YYLineDataModelProtocol> preDataModel;
+@property (nonatomic, strong) NSString *showDay;
 @end

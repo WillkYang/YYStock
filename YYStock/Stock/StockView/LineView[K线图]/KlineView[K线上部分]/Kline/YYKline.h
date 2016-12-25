@@ -7,15 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "YYLinePositionModel.h"
+#import "YYStockDataProtocol.h"
+@class YYLinePositionModel;
 @interface YYKline : UIView
 
-/**
- *  K线的位置model
- */
-@property (nonatomic, strong) YYLinePositionModel *kLinePositionModel;
-
-- (instancetype)initWithContext:(CGContextRef)context;
+- (instancetype)initWithContext:(CGContextRef)context drawModels:(NSArray <id<YYLineDataModelProtocol>>*)drawLineModels linePositionModels:(NSArray <YYLinePositionModel *>*)linePositionModels;
 
 - (void)draw;
 

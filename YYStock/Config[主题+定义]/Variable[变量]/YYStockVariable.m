@@ -34,6 +34,16 @@ static CGFloat YYStockLineViewRadio = 0.6;
  */
 static CGFloat YYStockVolumeViewRadio = 0.3;
 
+/**
+ 设置K线宽度数组
+ */
+static NSMutableArray *YYStockLineWidthArray;
+
+/**
+ 设置当前从哪个K线宽度数组进行存取
+ */
+static NSInteger YYStockLineWidthIndex;
+
 
 @implementation YYStockVariable
 
@@ -42,7 +52,11 @@ static CGFloat YYStockVolumeViewRadio = 0.3;
  */
 +(CGFloat)lineWidth
 {
-    return YYStockLineWidth;
+    if (YYStockLineWidthIndex >= 0 && YYStockLineWidthArray && [YYStockLineWidthArray count] > YYStockLineWidthIndex) {
+        return [YYStockLineWidthArray[YYStockLineWidthIndex] floatValue];
+    } else {
+        return YYStockLineWidth;
+    }
 }
 
 /**
@@ -57,7 +71,11 @@ static CGFloat YYStockVolumeViewRadio = 0.3;
     }else if (lineWidth < YYStockLineMinWidth){
         lineWidth = YYStockLineMinWidth;
     }
-    YYStockLineWidth = lineWidth;
+    if (YYStockLineWidthIndex >= 0 && YYStockLineWidthArray && [YYStockLineWidthArray count] > YYStockLineWidthIndex) {
+        YYStockLineWidthArray[YYStockLineWidthIndex] = [NSNumber numberWithFloat:lineWidth];
+    } else {
+        YYStockLineWidth = lineWidth;
+    }
 }
 
 /**
@@ -126,5 +144,14 @@ static CGFloat YYStockVolumeViewRadio = 0.3;
  */
 + (void)setVolumeViewRadio:(CGFloat)radio {
     YYStockVolumeViewRadio = radio;
+}
+
+
++ (void)setStockLineWidthArray:(NSArray <NSNumber *>*)lineWidthArray {
+    YYStockLineWidthArray = lineWidthArray.mutableCopy;
+}
+
++ (void)setStockLineWidthIndex:(NSInteger)lineWidthindex {
+    YYStockLineWidthIndex = lineWidthindex;
 }
 @end

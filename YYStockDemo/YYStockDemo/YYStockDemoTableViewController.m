@@ -12,6 +12,7 @@
 #import "YYFiveRecordModel.h"
 #import "YYLineDataModel.h"
 #import "YYTimeLineModel.h"
+#import "YYStockVariable.h"
 #import "AppServer.h"
 #import "YYStock.h"
 
@@ -74,6 +75,8 @@
 }
 
 - (void)initStockView {
+    [YYStockVariable setStockLineWidthArray:@[@6,@6,@6,@6]];
+    
     YYStock *stock = [[YYStock alloc]initWithFrame:self.stockContainerView.frame dataSource:self];
     _stock = stock;
     [self.stockContainerView addSubview:stock.mainView];
@@ -84,7 +87,6 @@
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(stock_enterFullScreen:)];
     tap.numberOfTapsRequired = 1;
     [self.stock.containerView addGestureRecognizer:tap];
-    
     [self.stock.containerView.subviews setValue:@0 forKey:@"userInteractionEnabled"];
     
 }
@@ -106,12 +108,17 @@
     
     [AppServer Get:@"day" params:nil success:^(NSDictionary *response) {
         NSMutableArray *array = [NSMutableArray array];
+        __block YYLineDataModel *preModel;
         [response[@"dayhqs"] enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
             YYLineDataModel *model = [[YYLineDataModel alloc]initWithDict:obj];
+            model.preDataModel = preModel;
             [model updateMA:response[@"dayhqs"]];
-            if (model.MA20 > 0) {
-                [array addObject: model];
+            NSString *day = [NSString stringWithFormat:@"%@",obj[@"day"]];
+            if ([response[@"dayhqs"] count] % 18 == ([response[@"dayhqs"] indexOfObject:obj] + 1 )%18 ) {
+                model.showDay = [NSString stringWithFormat:@"%@-%@-%@",[day substringToIndex:4],[day substringWithRange:NSMakeRange(4, 2)],[day substringWithRange:NSMakeRange(6, 2)]];
             }
+            [array addObject: model];
+            preModel = model;
         }];
         [self.stockDatadict setObject:array forKey:@"dayhqs"];
     } fail:^(NSDictionary *info) {
@@ -168,9 +175,11 @@
         make.edges.equalTo(self.fullScreenView);
     }];
     [self.stockContainerView addSubview:self.stock.mainView];
-    [self.stock.mainView mas_makeConstraints:^(MASConstraintMaker *make) {
+    [self.stock.mainView mas_remakeConstraints:^(MASConstraintMaker *make) {
         make.edges.equalTo(self.stockContainerView);
     }];
+    [self.stock.mainView layoutSubviews];
+    [YYStockVariable setStockLineWidthArray:@[@6,@6,@6,@6]];
     [self.stock draw];
     
     [UIView animateWithDuration:0.3 animations:^{
@@ -204,7 +213,7 @@
     [[UIApplication sharedApplication] setStatusBarHidden:YES];
     
     [fullScreenView addSubview:self.stock.mainView];
-    [self.stock.mainView mas_makeConstraints:^(MASConstraintMaker *make) {
+    [self.stock.mainView mas_remakeConstraints:^(MASConstraintMaker *make) {
         make.left.right.bottom.equalTo(fullScreenView);
         make.top.equalTo(fullScreenView).offset(66);
     }];

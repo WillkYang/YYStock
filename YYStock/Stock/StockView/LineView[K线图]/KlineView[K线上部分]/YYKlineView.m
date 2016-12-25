@@ -17,6 +17,8 @@
 
 @property (nonatomic, strong) NSMutableArray *drawPositionModels;
 
+@property (nonatomic, strong) NSArray <id<YYLineDataModelProtocol>>*drawLineModels;
+
 @property (nonatomic, strong) NSMutableArray *MA5Positions;
 
 @property (nonatomic, strong) NSMutableArray *MA10Positions;
@@ -35,12 +37,10 @@
         return;
     }
     
-    YYKline *line = [[YYKline alloc]initWithContext:ctx];
-
-    [self.drawPositionModels enumerateObjectsUsingBlock:^(YYLinePositionModel  *_Nonnull pModel, NSUInteger idx, BOOL * _Nonnull stop) {
-        line.kLinePositionModel = pModel;
+    if (self.drawPositionModels.count > 0) {
+        YYKline *line = [[YYKline alloc] initWithContext:ctx drawModels:self.drawLineModels linePositionModels:self.drawPositionModels];
         [line draw];
-    }];
+    }
     
     if(self.MA5Positions.count > 0) {
         MAline *ma5Line = [[MAline alloc]initWithContext:ctx];
@@ -71,7 +71,8 @@
 
 - (NSArray *)convertToPositionModelsWithXPosition:(CGFloat)startX drawLineModels:(NSArray <id<YYLineDataModelProtocol>>*)drawLineModels  maxValue:(CGFloat)maxValue minValue:(CGFloat)minValue {
     if (!drawLineModels) return nil;
-    
+
+    _drawLineModels = drawLineModels;
     [self.drawPositionModels removeAllObjects];
     [self.MA5Positions removeAllObjects];
     [self.MA10Positions removeAllObjects];
@@ -80,6 +81,7 @@
     CGFloat minY = YYStockLineMainViewMinY;
     CGFloat maxY = self.frame.size.height - YYStockLineMainViewMinY;
     CGFloat unitValue = (maxValue - minValue)/(maxY - minY);
+    if (unitValue == 0) unitValue = 0.01f;
     
     [drawLineModels enumerateObjectsUsingBlock:^(id<YYLineDataModelProtocol>  _Nonnull model, NSUInteger idx, BOOL * _Nonnull stop) {
         
@@ -90,27 +92,34 @@
         CGFloat closePointY = ABS(maxY - (model.Close.floatValue - minValue)/unitValue);
         
         //格式化openPoint和closePointY
-        if(ABS(closePointY - openPoint.y) < YYStockLineMinWidth) {
+        if(ABS(closePointY - openPoint.y) < YYStockLineMinThick) {
+            NSLog(@"%f",closePointY);
+            NSLog(@"%f",openPoint.y);
+//            if (openPoint.y == closePointY) {
+//                
+//            }
             if(openPoint.y > closePointY) {
-                openPoint.y = closePointY + YYStockLineMinWidth;
+                openPoint.y = closePointY + YYStockLineMinThick;
             } else if(openPoint.y < closePointY) {
-                closePointY = openPoint.y + YYStockLineMinWidth;
+                closePointY = openPoint.y + YYStockLineMinThick;
             } else {
                 if(idx > 0) {
                     id<YYLineDataModelProtocol> preKLineModel = drawLineModels[idx-1];
                     if(model.Open.floatValue > preKLineModel.Close.floatValue) {
-                        openPoint.y = closePointY + YYStockLineMinWidth;
+                        openPoint.y = closePointY + YYStockLineMinThick;
                     } else {
-                        closePointY = openPoint.y + YYStockLineMinWidth;
+                        closePointY = openPoint.y + YYStockLineMinThick;
                     }
                 } else if(idx+1 < drawLineModels.count) {
                     //idx==0即第一个时
                     id<YYLineDataModelProtocol> subKLineModel = drawLineModels[idx+1];
                     if(model.Close.floatValue < subKLineModel.Open.floatValue) {
-                        openPoint.y = closePointY + YYStockLineMinWidth;
+                        openPoint.y = closePointY + YYStockLineMinThick;
                     } else {
-                        closePointY = openPoint.y + YYStockLineMinWidth;
+                        closePointY = openPoint.y + YYStockLineMinThick;
                     }
+                } else {
+                    openPoint.y = closePointY - YYStockLineMinThick;
                 }
             }
         }

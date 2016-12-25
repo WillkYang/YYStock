@@ -70,4 +70,8 @@
  */
 +(void)setTimeLineVolumeWidth:(CGFloat)timeLineVolumeWidth;
 
++ (void)setStockLineWidthArray:(NSArray <NSNumber *>*)lineWidthArray;
+
++ (void)setStockLineWidthIndex:(NSInteger)lineWidthindex;
+
 @end

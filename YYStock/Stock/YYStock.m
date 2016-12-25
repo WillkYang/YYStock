@@ -105,6 +105,7 @@
     NSInteger index = self.currentIndex;
     if ([self.stockViewArray[index] isKindOfClass:[YYStockView_Kline class]]) {
         YYStockView_Kline *stockView = (YYStockView_Kline *)(self.stockViewArray[index]);
+        
         [stockView reDrawWithLineModels:[self.dataSource YYStock:self stockDatasOfIndex:index]];
     }
     if ([self.stockViewArray[index] isKindOfClass:[YYStockView_TimeLine class]]) {

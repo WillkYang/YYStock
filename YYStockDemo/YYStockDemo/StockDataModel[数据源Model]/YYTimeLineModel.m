@@ -3,7 +3,7 @@
 //  投融宝
 //
 //  Created by yate1996 on 16/10/10.
-//  Copyright © 2016年 yate1996. All rights reserved.
+//  Copyright © 2016年 yeeyuntech. All rights reserved.
 //
 
 #import "YYTimeLineModel.h"
@@ -16,8 +16,11 @@
 }
 
 - (NSString *)TimeDesc {
-    if ( [_dict[@"minute"] integerValue] == 780) {
+    NSLog(@"%@",_dict[@"minute"]);
+    if( [_dict[@"minute"] integerValue] == 780) {
         return @"11:30/13:00";
+    } else if( [_dict[@"minute"] integerValue] == 1020) {
+        return @"15:00";
     } else {
         return [NSString stringWithFormat:@"%02ld:%02ld",[_dict[@"minute"] integerValue]/60,[_dict[@"minute"] integerValue]%60];
     }
@@ -37,7 +40,7 @@
 }
 
 - (CGFloat)Volume {
-    return [_dict[@"volume"] floatValue];
+    return [_dict[@"volume"] floatValue]/100.f;
 }
 
 - (BOOL)isShowTimeDesc {

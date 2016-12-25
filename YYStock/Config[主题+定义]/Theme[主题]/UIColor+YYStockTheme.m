@@ -79,7 +79,7 @@
  *  长按出现的圆点的颜色
  */
 +(UIColor *)YYStock_selectedPointColor {
-    return [UIColor YYStock_decreaseColor];
+    return [UIColor YYStock_increaseColor                                                                                  ];
 }
 
 /**
@@ -117,20 +117,18 @@
     return [UIColor colorWithHex:0x60CFFF alpha:0.1f];
 }
 
-
-
 /**
  *  涨的颜色
  */
 +(UIColor *)YYStock_increaseColor {
-    return [UIColor colorWithHex:0x41CB47];
+    return [UIColor colorWithHex:0xE74C3C];
 }
 
 /**
  *  跌的颜色
  */
 +(UIColor *)YYStock_decreaseColor {
-    return [UIColor colorWithHex:0xE74C3C];
+    return [UIColor colorWithHex:0x41CB47];
 }
 
 

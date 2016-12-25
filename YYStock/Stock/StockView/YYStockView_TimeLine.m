@@ -277,8 +277,9 @@
     CGFloat creasePercent = (maxValue / ((maxValue + minValue)/2.f)) * 100 - 100;
     
     if (isnan(creasePercent) || creasePercent == INFINITY) {
-        creasePercent = 0.00;
+        creasePercent = 0.000001;
     }
+    
     //顶部间距
     for (int i = 0; i < 3; i++) {
         NSString *text = [NSString stringWithFormat:@"%.2f",maxValue - unitValue * i];
@@ -308,7 +309,7 @@
             descText = @"万手";
         }
     } else {
-        text = [NSString stringWithFormat:@"%.2f",volume];
+        text = [NSString stringWithFormat:@"%.0f",volume];
         descText = @"手";
     }
     [text drawInRect:CGRectMake(leftGap, YYStockScrollViewTopGap + self.stockScrollView.frame.size.height * (1 - [YYStockVariable volumeViewRadio]), 60, 20) withAttributes:attribute];
@@ -324,11 +325,32 @@
     CGFloat average = [self.drawLineModels.firstObject AvgPrice];
     maxValue = [[[self.drawLineModels valueForKeyPath:@"Price"] valueForKeyPath:@"@max.floatValue"] floatValue];
     minValue = [[[self.drawLineModels valueForKeyPath:@"Price"] valueForKeyPath:@"@min.floatValue"] floatValue];
-    if (ABS(maxValue - average) > ABS(average - minValue)) {
-        minValue = 2 * average - maxValue;
+    
+    
+    if (maxValue == minValue && maxValue == average) {
+        //处理特殊情况
+        if (maxValue == 0) {
+            
+            maxValue = 0.00001;
+            minValue = -0.00001;
+        } else {
+            maxValue = maxValue * 2;
+            minValue = 0.01;
+        }
     } else {
-        maxValue = 2 * average - minValue;
+        if (ABS(maxValue - average) >= ABS(average - minValue)) {
+            minValue = 2 * average - maxValue;
+        }
+        if (ABS(maxValue - average) < ABS(average - minValue)) {
+            maxValue = 2 * average - minValue;
+        }
     }
+    
+//    if (ABS(maxValue - average) >= ABS(average - minValue)) {
+//        minValue = 2 * average - maxValue;
+//    } else {
+//        maxValue = 2 * average - minValue;
+//    }
 }
 
 - (void)updateScrollViewContentWidth {
@@ -338,7 +360,6 @@
     //9:30-11:30/12:00-15:00一共240分钟
     NSInteger minCount = 240;
     [YYStockVariable setTimeLineVolumeWidth:((self.stockScrollView.bounds.size.width - (minCount - 1) * YYStockTimeLineViewVolumeGap) / minCount)];
-    
 }
 
 
@@ -357,7 +378,6 @@
         [lineView mas_makeConstraints:^(MASConstraintMaker *make) {
             make.edges.equalTo(view).insets(UIEdgeInsetsMake(2, 0, 2, 0));
         }];
-
         return view;
     } else {
         return nil;

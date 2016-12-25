@@ -17,6 +17,11 @@
 
 @required
 
+
+/**
+ 前一个数据
+ */
+@property (nonatomic, readonly) id<YYLineDataModelProtocol> preDataModel;
 /**
  *  开盘价
  */

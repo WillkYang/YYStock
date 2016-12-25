@@ -11,6 +11,8 @@
 #import "YYLinePositionModel.h"
 @interface YYKlineVolumeView : UIView
 
+@property (nonatomic, weak) UIScrollView *parentScrollView;
+
 - (void)drawViewWithXPosition:(CGFloat)xPosition drawModels:(NSArray <id<YYLineDataModelProtocol>>*)drawLineModels linePositionModels:(NSArray <YYLinePositionModel *>*)linePositionModels;
 
 @end

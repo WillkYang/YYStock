@@ -3,7 +3,7 @@
 //  投融宝
 //
 //  Created by yate1996 on 16/10/10.
-//  Copyright © 2016年 yate1996. All rights reserved.
+//  Copyright © 2016年 yeeyuntech. All rights reserved.
 //
 
 #import "YYFiveRecordModel.h"
@@ -45,42 +45,47 @@
     if (self = [super init]) {
         _dict = dict;
         
-        NSMutableArray *arr1 = [NSMutableArray array];
+        sellPriceArray = @[
+                                [self formatFiveRecordTo2Decimal:dict[@"sjw5"]],
+                                [self formatFiveRecordTo2Decimal:dict[@"sjw4"]],
+                                [self formatFiveRecordTo2Decimal:dict[@"sjw3"]],
+                                [self formatFiveRecordTo2Decimal:dict[@"sjw2"]],
+                                [self formatFiveRecordTo2Decimal:dict[@"sjw1"]],
+                                ];
         
-        [arr1 addObject:[NSString stringWithFormat:@"%.0f",[dict[@"sjw1"] floatValue]]];
-        [arr1 addObject:[NSString stringWithFormat:@"%.0f",[dict[@"sjw2"] floatValue]]];
-        [arr1 addObject:[NSString stringWithFormat:@"%.0f",[dict[@"sjw3"] floatValue]]];
-        [arr1 addObject:[NSString stringWithFormat:@"%.0f",[dict[@"sjw4"] floatValue]]];
-        [arr1 addObject:[NSString stringWithFormat:@"%.0f",[dict[@"sjw5"] floatValue]]];
-        sellPriceArray = arr1.copy;
+        buyPriceArray = @[
+                           [self formatFiveRecordTo2Decimal:dict[@"bjw1"]],
+                           [self formatFiveRecordTo2Decimal:dict[@"bjw2"]],
+                           [self formatFiveRecordTo2Decimal:dict[@"bjw3"]],
+                           [self formatFiveRecordTo2Decimal:dict[@"bjw4"]],
+                           [self formatFiveRecordTo2Decimal:dict[@"bjw5"]],
+                           ];
         
-        NSMutableArray *arr2 = [NSMutableArray array];
-        [arr2 addObject:[dict[@"bjw1"] stringValue]];
-        [arr2 addObject:[dict[@"bjw2"] stringValue]];
-        [arr2 addObject:[dict[@"bjw3"] stringValue]];
-        [arr2 addObject:[dict[@"bjw4"] stringValue]];
-        [arr2 addObject:[dict[@"bjw5"] stringValue]];
-        buyPriceArray = arr2.copy;
+        sellVolumeArray = @[
+                          [self formatFiveRecordTo0Decimal:dict[@"ssl5"]],
+                          [self formatFiveRecordTo0Decimal:dict[@"ssl4"]],
+                          [self formatFiveRecordTo0Decimal:dict[@"ssl3"]],
+                          [self formatFiveRecordTo0Decimal:dict[@"ssl2"]],
+                          [self formatFiveRecordTo0Decimal:dict[@"ssl1"]],
+                          ];
         
-        NSMutableArray *arr3 = [NSMutableArray array];
-        [arr3 addObject:[dict[@"ssl1"] stringValue]];
-        [arr3 addObject:[dict[@"ssl2"] stringValue]];
-        [arr3 addObject:[dict[@"ssl3"] stringValue]];
-        [arr3 addObject:[dict[@"ssl4"] stringValue]];
-        [arr3 addObject:[dict[@"ssl5"] stringValue]];
-        sellVolumeArray = arr3.copy;
-
-        
-        NSMutableArray *arr4 = [NSMutableArray array];
-        [arr4 addObject:[dict[@"bsl1"] stringValue]];
-        [arr4 addObject:[dict[@"bsl2"] stringValue]];
-        [arr4 addObject:[dict[@"bsl3"] stringValue]];
-        [arr4 addObject:[dict[@"bsl4"] stringValue]];
-        [arr4 addObject:[dict[@"bsl5"] stringValue]];
-        buyVolumeArray = arr4.copy;
-
-
+        buyVolumeArray = @[
+                            [self formatFiveRecordTo0Decimal:dict[@"bsl1"]],
+                            [self formatFiveRecordTo0Decimal:dict[@"bsl2"]],
+                            [self formatFiveRecordTo0Decimal:dict[@"bsl3"]],
+                            [self formatFiveRecordTo0Decimal:dict[@"bsl4"]],
+                            [self formatFiveRecordTo0Decimal:dict[@"bsl5"]],
+                            ];
     }
     return self;
+}
+
+
+- (NSString *)formatFiveRecordTo2Decimal:(NSString *)data {
+    return [data floatValue] > 0 ? [NSString stringWithFormat:@"%.2f", [data floatValue]] : @"--";
+}
+
+- (NSString *)formatFiveRecordTo0Decimal:(NSString *)data {
+    return [data floatValue] > 0 ? [NSString stringWithFormat:@"%.0f", [data floatValue]/100.f] : @"--";
 }
 @end

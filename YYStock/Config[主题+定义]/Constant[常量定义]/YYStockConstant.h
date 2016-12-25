@@ -12,6 +12,11 @@
 
 #endif /* YYStockConstant_h */
 
+/**
+ *  K线最小的厚度
+ */
+#define YYStockLineMinThick 0.5
+
 
 /**
  *  K线最大的宽度
@@ -21,7 +26,7 @@
 /**
  *  K线图最小的宽度
  */
-#define YYStockLineMinWidth 2
+#define YYStockLineMinWidth 3
 
 /**
  *  时分线的宽度
