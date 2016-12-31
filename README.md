@@ -51,4 +51,4 @@ K线图
 
 ###欢迎加群讨论更多：578874451
 
-####欢迎 [Fork](https://github.com/yate1996/YYStock/fork) & [PR](https://github.com/yate1996/YYStock/pulls) & [issue](https://github.com/yate1996/YYStock/issues/new)，我会更有动力处理的的😄～
+####欢迎 [Fork](https://github.com/yate1996/YYStock/fork) & [Pull Request](https://github.com/yate1996/YYStock/pulls) & [提问](https://github.com/yate1996/YYStock/issues/new)，我会更有动力处理的的😄～
