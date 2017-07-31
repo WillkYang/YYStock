@@ -112,7 +112,7 @@
         [response[@"dayhqs"] enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
             YYLineDataModel *model = [[YYLineDataModel alloc]initWithDict:obj];
             model.preDataModel = preModel;
-            [model updateMA:response[@"dayhqs"]];
+            [model updateMA:response[@"dayhqs"] index:idx];
             NSString *day = [NSString stringWithFormat:@"%@",obj[@"day"]];
             if ([response[@"dayhqs"] count] % 18 == ([response[@"dayhqs"] indexOfObject:obj] + 1 )%18 ) {
                 model.showDay = [NSString stringWithFormat:@"%@-%@-%@",[day substringToIndex:4],[day substringWithRange:NSMakeRange(4, 2)],[day substringWithRange:NSMakeRange(6, 2)]];

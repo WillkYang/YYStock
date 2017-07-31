@@ -102,9 +102,9 @@
     return self;
 }
 
-- (void)updateMA:(NSArray *)parentDictArray {
+- (void)updateMA:(NSArray *)parentDictArray index:(NSInteger)index{
     _parentDictArray = parentDictArray;
-    NSInteger index = [_parentDictArray indexOfObject:_dict];
+    
     if (index >= 4) {
         NSArray *array = [_parentDictArray subarrayWithRange:NSMakeRange(index-4, 5)];
         CGFloat average = [[[array valueForKeyPath:@"close"] valueForKeyPath:@"@avg.floatValue"] floatValue];

@@ -15,7 +15,7 @@
  */
 @interface YYLineDataModel : NSObject <YYLineDataModelProtocol>
 
-- (void)updateMA:(NSArray *)parentDictArray;
+- (void)updateMA:(NSArray *)parentDictArray index:(NSInteger)index;
 
 
 //@property (nonatomic, assign) BOOL isShowDay;
