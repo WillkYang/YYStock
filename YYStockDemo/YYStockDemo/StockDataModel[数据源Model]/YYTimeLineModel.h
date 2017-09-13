@@ -2,7 +2,7 @@
 //  YYTimeLineModel.h
 //  投融宝
 //
-//  Created by yate1996 on 16/10/10.
+//  Created by WillkYang on 16/10/10.
 //  Copyright © 2016年 yeeyuntech. All rights reserved.
 //
 

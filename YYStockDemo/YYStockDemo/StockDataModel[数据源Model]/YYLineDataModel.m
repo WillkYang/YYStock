@@ -2,7 +2,7 @@
 //  YYLineDataModel.m
 //  投融宝
 //
-//  Created by yate1996 on 16/10/5.
+//  Created by WillkYang on 16/10/5.
 //  Copyright © 2016年 yeeyuntech. All rights reserved.
 //
 

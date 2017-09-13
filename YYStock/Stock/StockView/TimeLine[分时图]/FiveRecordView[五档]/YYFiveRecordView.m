@@ -1,9 +1,9 @@
 //
 //  YYFiveRecordView.m
-//  YYStock  ( https://github.com/yate1996 )
+//  YYStock  ( https://github.com/WillkYang )
 //
-//  Created by yate1996 on 16/10/10.
-//  Copyright © 2016年 yate1996. All rights reserved.
+//  Created by WillkYang on 16/10/10.
+//  Copyright © 2016年 WillkYang. All rights reserved.
 //
 
 #import "YYFiveRecordView.h"
@@ -28,6 +28,7 @@
         self.separatorStyle = UITableViewCellSeparatorStyleNone;
         self.bounces = NO;
         self.showsVerticalScrollIndicator = NO;
+        [self registerNib:[UINib nibWithNibName:YYFiveRecordTableViewCellIdentifier bundle:nil] forCellReuseIdentifier:YYFiveRecordTableViewCellIdentifier];
     }
     return self;
 }
@@ -45,9 +46,6 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (![self dequeueReusableCellWithIdentifier:YYFiveRecordTableViewCellIdentifier]) {
-        [self registerNib:[UINib nibWithNibName:YYFiveRecordTableViewCellIdentifier bundle:nil] forCellReuseIdentifier:YYFiveRecordTableViewCellIdentifier];
-    }
     YYFiveRecordTableViewCell *cell = [self dequeueReusableCellWithIdentifier:YYFiveRecordTableViewCellIdentifier forIndexPath:indexPath];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     if (indexPath.section == 0) {

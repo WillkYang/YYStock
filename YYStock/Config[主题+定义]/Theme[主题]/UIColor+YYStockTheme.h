@@ -1,5 +1,5 @@
 /*
- 作者：  yate1996
+ 作者：  WillkYang
  文件：  UIColor+YYStockTheme.m
  版本：  1.0 <2016.10.05>
  地址：

@@ -2,8 +2,8 @@
 //  AppDelegate.m
 //  YYStockDemo
 //
-//  Created by yate1996 on 16/10/17.
-//  Copyright © 2016年 yate1996. All rights reserved.
+//  Created by WillkYang on 16/10/17.
+//  Copyright © 2016年 WillkYang. All rights reserved.
 //
 
 #import "AppDelegate.h"
