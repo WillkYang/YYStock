@@ -16,6 +16,12 @@
 #import "AppServer.h"
 #import "YYStock.h"
 
+#define IS_IPHONE (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
+#define kScreenWidth [UIScreen mainScreen].bounds.size.width
+#define kScreenHeight [UIScreen mainScreen].bounds.size.height
+#define SCREEN_MAX_LENGTH MAX(kScreenWidth,kScreenHeight)
+#define IS_IPHONE_X (IS_IPHONE && SCREEN_MAX_LENGTH == 812.0)
+
 @interface YYStockDemoTableViewController ()<YYStockDataSource>
 
 /**
@@ -210,11 +216,18 @@
         make.height.equalTo(window.mas_width);
         make.center.equalTo(window);
     }];
+
+    
     [[UIApplication sharedApplication] setStatusBarHidden:YES];
     
     [fullScreenView addSubview:self.stock.mainView];
     [self.stock.mainView mas_remakeConstraints:^(MASConstraintMaker *make) {
-        make.left.right.bottom.equalTo(fullScreenView);
+        if (IS_IPHONE_X) {
+            make.left.bottom.equalTo(fullScreenView).offset(30);
+        } else {
+            make.left.bottom.equalTo(fullScreenView);
+        }
+        make.right.bottom.equalTo(fullScreenView);
         make.top.equalTo(fullScreenView).offset(66);
     }];
     fullScreenView.transform = CGAffineTransformMakeRotation(M_PI_2);
