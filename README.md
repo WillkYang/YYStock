@@ -3,7 +3,7 @@
 [![License MIT](https://img.shields.io/badge/license-MIT-green.svg?style=flat)]() &nbsp;
 [![Support](https://img.shields.io/badge/support-iOS7.0+-blue.svg?style=flat)]() &nbsp;
 [![Support](https://img.shields.io/badge/support-Autolayout-orange.svg?style=flatt)]() &nbsp;
-[![Build Status](https://travis-ci.org/yate1996/YYStock.svg?branch=master)](https://travis-ci.org/yate1996/YYStock) &nbsp;
+[![Build Status](https://travis-ci.org/WillkYang/YYStock.svg?branch=master)](https://travis-ci.org/WillkYang/YYStock) &nbsp;
 
 ## Requirements
 The version requires iOS 7.0+ and Xcode 7.0+
