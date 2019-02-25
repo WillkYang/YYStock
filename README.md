@@ -51,3 +51,8 @@ K线图
 ### 欢迎加群讨论更多：578874451
 
 #### 欢迎 [Fork](https://github.com/yate1996/YYStock/fork) & [Pull Request](https://github.com/yate1996/YYStock/pulls) & [提问](https://github.com/yate1996/YYStock/issues/new)，我会更有动力处理的的😄～
+
+
+如果ta帮到你节省了时间，要不要请我喝杯咖啡？
+--
+![](https://images.cnblogs.com/cnblogs_com/yate1996/710719/o_C83B4782DA1F7B7BA7539E802BA6BF14.png)
