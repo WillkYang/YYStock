@@ -1,4 +1,4 @@
-## YYStock(iOS股票K线第二版,欢迎围观star(*^__^*))
+## YYStock
 
 [![License MIT](https://img.shields.io/badge/license-MIT-green.svg?style=flat)]() &nbsp;
 [![Support](https://img.shields.io/badge/support-iOS7.0+-blue.svg?style=flat)]() &nbsp;
@@ -42,17 +42,6 @@ K线图
 非全屏嵌入
 ![非全屏嵌入](http://images2015.cnblogs.com/blog/784141/201610/784141-20161017233111295-969151974.png)
 
+### 加群讨论更多：578874451
 
-咦,发现UI好看但是功能不够你用???
-
-没事,欲求不满的话专业版K线Demo也早早就准备好了♪(^∇^*) 
-这里这里:https://github.com/yate1996/Y_KLine
-
-### 欢迎加群讨论更多：578874451
-
-#### 欢迎 [Fork](https://github.com/yate1996/YYStock/fork) & [Pull Request](https://github.com/yate1996/YYStock/pulls) & [提问](https://github.com/yate1996/YYStock/issues/new)，我会更有动力处理的的😄～
-
-
-如果ta帮到你节省了时间，要不要请我喝杯咖啡？
---
-![](https://images.cnblogs.com/cnblogs_com/yate1996/710719/o_C83B4782DA1F7B7BA7539E802BA6BF14.png)
+#### 欢迎 [Fork](https://github.com/yate1996/YYStock/fork) & [Pull Request](https://github.com/yate1996/YYStock/pulls) & [提问](https://github.com/yate1996/YYStock/issues/new)
