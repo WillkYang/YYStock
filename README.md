@@ -11,12 +11,6 @@ The version requires iOS 7.0+ and Xcode 7.0+
 ## License
 YYStock is provided under the MIT license. See LICENSE file for details.
 
-## 介绍
-#### 相比第一版:
-#### 1.代码重新封装,数据源抽象,更方便集成
-#### 2.代码注释,逻辑清晰,低耦合
-#### 3.......
-
 长按分时图+五档图
 ![长按分时图+五档图](http://images2015.cnblogs.com/blog/784141/201610/784141-20161017233159888-557730348.png)
 
