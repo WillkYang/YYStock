@@ -5,37 +5,25 @@
 [![Support](https://img.shields.io/badge/support-Autolayout-orange.svg?style=flatt)]() &nbsp;
 [![Build Status](https://travis-ci.org/WillkYang/YYStock.svg?branch=master)](https://travis-ci.org/WillkYang/YYStock) &nbsp;
 
-## Requirements
-The version requires iOS 7.0+ and Xcode 7.0+
+## 介绍
+- [x] 支持运行于iOS、MacOS上
+- [x] 专业K线版本请参考： [YYKline](https://github.com/WillkYang/YYKline)
+
+
+
+## 图表示例
+| K线图 | 分时图+五档图
+|------------|------------
+| ![K线图](https://github.com/WillkYang/YYStock/blob/master/Assets/5.png?raw=true) |![分时图+五档图](https://github.com/WillkYang/YYStock/blob/master/Assets/2.png?raw=true)
+| 长按分时图 | 分时图
+| ![长按分时图](https://github.com/WillkYang/YYStock/blob/master/Assets/3.png?raw=true)|![分时图](https://github.com/WillkYang/YYStock/blob/master/Assets/4.png?raw=true)
+| 长按分时图+五档图 | 长按K线图
+| ![长按分时图+五档图](https://github.com/WillkYang/YYStock/blob/master/Assets/1.png?raw=true) |![长按K线图](https://github.com/WillkYang/YYStock/blob/master/Assets/6.png?raw=true)
+| 非全屏嵌入 |
+|<img src="https://github.com/WillkYang/YYStock/blob/master/Assets/7.png?raw=true" alt="非全屏嵌入" width="300" height="380" align="bottom" />|
 
 ## License
 YYStock is provided under the MIT license. See LICENSE file for details.
 
-长按分时图+五档图
-![长按分时图+五档图](http://images2015.cnblogs.com/blog/784141/201610/784141-20161017233159888-557730348.png)
+### 加群讨论：578874451
 
-分时图+五档图
-![分时图+五档图](http://images2015.cnblogs.com/blog/784141/201610/784141-20161017233148232-878225916.png)
-
-长按分时图
-![长按分时图](http://images2015.cnblogs.com/blog/784141/201610/784141-20161017233121404-1964273658.png)
- 
-
-分时图
-![分时图](http://images2015.cnblogs.com/blog/784141/201610/784141-20161017233154295-1120327196.png)
-
-
-K线图
-![K线图](http://images2015.cnblogs.com/blog/784141/201610/784141-20161017233130935-1508782795.png)
-
-
-长按K线图
-![长按K线图](http://images2015.cnblogs.com/blog/784141/201610/784141-20161017233206029-111514556.png)
-
-
-非全屏嵌入
-![非全屏嵌入](http://images2015.cnblogs.com/blog/784141/201610/784141-20161017233111295-969151974.png)
-
-### 加群讨论更多：578874451
-
-#### 欢迎 [Fork](https://github.com/yate1996/YYStock/fork) & [Pull Request](https://github.com/yate1996/YYStock/pulls) & [提问](https://github.com/yate1996/YYStock/issues/new)
